@@ -2,6 +2,7 @@ import { AbstractControl, ValidatorFn, FormGroup } from '@angular/forms';
 export class ValidationService {
     static getValidatorErrorMessage(validatorName: string, validatorValue?: any, prettyName?: string) {
         let config = {
+            'alpha': `${prettyName} Hanya boleh berisi huruf`,
             'required': `${prettyName} Tidak boleh kosong`,
             'alpha_num': `${prettyName} Hanya boleh berisi huruf dan angka`,
             'password': `${prettyName} minimal 6 karakter, dan harus berisi angka`,
@@ -17,6 +18,15 @@ export class ValidationService {
         };
 
         return config[validatorName];
+    }
+
+    static alpha(control) {
+        control.value = "" + control.value
+        if (control.value.match(/^[A-Za-z]+$/)) {
+            return null;
+        } else {
+            return { 'alpha': true };
+        }
     }
 
     static required(control) {

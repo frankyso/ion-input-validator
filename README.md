@@ -31,6 +31,9 @@ Include your directive into the same tag with ``[FormGroup]``
 ### required
 The field under validation must be present in the input data and not empty.
 
+### alpha
+The field under validation must be entirely alphabetic characters.
+
 ### alpha_num
 The field under validation must be entirely alpha-numeric characters.
 
@@ -63,6 +66,51 @@ The field under validation must be more than specified value
 ### startsWith
 The field under validation must start with one of the given values.
 
+
+## Upcoming Validation Rule Converted from Laravel
+* alpha_dash
+* array
+* before:date
+* before_or_equal:date
+* between:min,max
+* boolean
+* date
+* date_equals:date
+* date_format:format
+* different:field
+* digits:value
+* digits_between:min,max
+* dimensions
+* distinct
+* ends_with:foo,bar,...
+* filled
+* gt:field
+* gte:field
+* in:foo,bar,...
+* in_array:anotherfield.*
+* integer
+* ip
+* ipv4
+* ipv6
+* json
+* lt:field
+* lte:field
+* mimetypes:text/plain,...
+* nullable
+* present
+* regex:pattern
+* required_if:anotherfield,value,...
+* required_unless:anotherfield,value,...
+* required_with:foo,bar,...
+* required_with_all:foo,bar,...
+* required_without:foo,bar,...
+* required_without_all:foo,bar,...
+* same:field
+* size:value
+* string
+* timezone
+* url
+* uuid
 
 ## Authors
 
