@@ -11,10 +11,10 @@ export class ValidationService {
             'unique': `${prettyName} pernah terdaftar sebelumnya, silahkan gunakan ${prettyName} lain`,
             'numeric': `${prettyName} harus angka`,
             'phone': `${prettyName} tidak valid`,
-            'min': `${prettyName} tidak boleh kurang dari ${validatorValue.requiredValue}`,
+            'min': `${prettyName} tidak boleh kurang dari ${validatorValue}`,
             'max': `${prettyName} tidak boleh lebih dari  ${validatorValue.requiredValue}`,
             'minlength': `Jumlah karakter ${prettyName} tidak boleh kurang dari ${validatorValue.requiredLength}`,
-            'startsWith': `${prettyName} harus dimulai dari ${validatorValue.requiredLength}`,
+            'startsWith': `${prettyName} harus dimulai dari ${validatorValue}`,
         };
 
         return config[validatorName];
@@ -30,7 +30,6 @@ export class ValidationService {
     }
 
     static required(control) {
-        control.value = "" + control.value
         if (control.value.match(/./)) {
             return null;
         } else {
@@ -71,6 +70,7 @@ export class ValidationService {
     }
 
     static password(control) {
+        control.value = String(control.value);
         // {6,100}           - Assert password is between 6 and 100 characters
         // (?=.*[0-9])       - Assert a string has at least one number
         if (control.value.match(/^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,100}$/)) {
@@ -81,6 +81,7 @@ export class ValidationService {
     }
 
     static phone(control) {
+        control.value = String(control.value);
         if (control.value.match(/^(0|[0-9][0-9]*)$/)) {
             return null;
         } else {
@@ -89,6 +90,7 @@ export class ValidationService {
     }
 
     static numeric(control) {
+        control.value = String(control.value);
         if (control.value.match(/^(0|[1-9][0-9]*)$/)) {
             return null;
         } else {
@@ -98,10 +100,8 @@ export class ValidationService {
 
     static min = (min: number): ValidatorFn => {
         return (control: AbstractControl): { [key: string]: any } => {
-            if (control.value < min) {
-                // console.log({'actualValue': control.value, 'requiredValue': min, 'min': true});
-                // return {'actualValue': control.value, 'requiredValue': min, 'min': true};
-                return { 'min': true, 'requiredValue': min };
+            if ((control.value || 0) < min) {
+                return { 'min': min };
             }
             else {
                 return null;
@@ -123,10 +123,10 @@ export class ValidationService {
     /**
      * The field under validation must start with one of the given values.
      */
-    static startsWith = (startsWith: string): ValidatorFn => {
+    static startsWith = (string: string): ValidatorFn => {
         return (control: AbstractControl): { [key: string]: any } => {
-            if (control.value.startsWith(startsWith)) {
-                return { 'startsWith': true, 'requiredValue': startsWith };
+            if (!control.value.startsWith(string)) {
+                return { 'startsWith': string };
             }
             else {
                 return null;
